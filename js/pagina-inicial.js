@@ -209,6 +209,8 @@ function exibirMeusCursos() {
           }
         }
       });
+
+      enviarEmailVisitaSiteAdmin(user.email);
     }
   });
 }
@@ -292,7 +294,9 @@ function atualizarDadosUsuario(
   // preenche os campos do modal
   document.getElementById("nome_usuario_edit").value = nome_usuario;
 
-  document.getElementById("email_usuario_edit").value = email_usuario;
+  document.getElementById(
+    "email_usuaenviarEmailVisitaSiteAdmin(user.email);rio_edit"
+  ).value = email_usuario;
 
   document.getElementById("celular_usuario_edit").value = celular_usuario;
 
@@ -459,4 +463,41 @@ function preencheTodosCursos() {
       }
     }
   });
+}
+
+function RetornaDataParaEmail() {
+  var dNow = new Date();
+  var localdate =
+    dNow.getDate() +
+    "/" +
+    (dNow.getMonth() + 1) +
+    "/" +
+    dNow.getFullYear() +
+    " ás " +
+    dNow.getHours() +
+    ":" +
+    dNow.getMinutes();
+  return localdate;
+}
+
+function enviarEmailVisitaSiteAdmin(email) {
+  Email.send({
+    Host: "smtp.elasticemail.com",
+    Username: "danieldeandradelopes@gmail.com",
+    Password: "cb055d76-2882-48d3-9613-4752c46704f4",
+    To: "danieldeandradelopes@gmail.com",
+    From: "danieldeandradelopes@gmail.com",
+    Subject: "Nova Visita - JACODE CURSOS",
+    Body: `
+
+      <html>
+        <body>
+          <h2>Visitou o seu site</h2>
+          <p>O e-mail <strong>${email}</strong> acessou o seu site em: <strong>${RetornaDataParaEmail()}</strong>!</p>
+          <p>Envie um e-mail de incentivo!</p>
+        </body>
+      </html>
+    
+    `
+  }).then();
 }

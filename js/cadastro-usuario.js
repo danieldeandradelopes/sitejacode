@@ -29,6 +29,8 @@ addButton.addEventListener("click", function() {
         .then(function() {
           enviaEmailConfirmacao();
 
+          enviarEmailAdmin(emailParametro);
+
           firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
               var myUserId = firebase.auth().currentUser.uid;
@@ -66,6 +68,21 @@ function RetornaDataHoraAtual() {
   var dNow = new Date();
   var localdate =
     dNow.getFullYear() + "/" + (dNow.getMonth() + 1) + "/" + dNow.getDate();
+  return localdate;
+}
+
+function RetornaDataParaEmail() {
+  var dNow = new Date();
+  var localdate =
+    dNow.getDate() +
+    "/" +
+    (dNow.getMonth() + 1) +
+    "/" +
+    dNow.getFullYear() +
+    " ás " +
+    dNow.getHours() +
+    ":" +
+    dNow.getMinutes();
   return localdate;
 }
 
@@ -150,4 +167,26 @@ function recuperarSenha() {
     .catch(function(error) {
       // An error happened.
     });
+}
+
+function enviarEmailAdmin(email) {
+  Email.send({
+    Host: "smtp.elasticemail.com",
+    Username: "danieldeandradelopes@gmail.com",
+    Password: "cb055d76-2882-48d3-9613-4752c46704f4",
+    To: "danieldeandradelopes@gmail.com",
+    From: "danieldeandradelopes@gmail.com",
+    Subject: "Novo Usuário - JACODE CURSOS",
+    Body: `
+
+      <html>
+        <body>
+          <h2>Novo usuário cadastrado no site</h2>
+          <p>O e-mail <strong>${email}</strong> foi cadastrado em seu site em: <strong>${RetornaDataParaEmail()}</strong>!</p>
+          <p>Dê as boas vindas a ele!</p>
+        </body>
+      </html>
+    
+    `
+  }).then();
 }

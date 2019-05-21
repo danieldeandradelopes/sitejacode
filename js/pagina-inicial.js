@@ -294,9 +294,7 @@ function atualizarDadosUsuario(
   // preenche os campos do modal
   document.getElementById("nome_usuario_edit").value = nome_usuario;
 
-  document.getElementById(
-    "email_usuaenviarEmailVisitaSiteAdmin(user.email);rio_edit"
-  ).value = email_usuario;
+  document.getElementById("email_usuario_edit").value = email_usuario;
 
   document.getElementById("celular_usuario_edit").value = celular_usuario;
 
